@@ -1,37 +1,63 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamageable
 {
     [Header("Movement")]
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private float speed = 5f;
     [Header("Rotation")] 
-    [SerializeField] private float rotationSpeed = 180f;
+    [SerializeField] private float rotationSpeed = 20f;
     [Header("Shooting")] 
     [SerializeField] private Transform[] gunPoints;
     [SerializeField] private Projectile projectilePrefab;
-    [SerializeField] private float shootCooldown = 0.5f;
+    [SerializeField] private float shootCooldown = 0.3f;
+    [Header("Health")] 
+    [SerializeField] private int maxHealth = 100;
+    [SerializeField] private Collider2DInvoker[] hitBoxes;
 
     private Vector2 _targetVelocity;
-    private Vector2 _targetRotation;
-    private float _remainingCooldown = 0f;
 
-    private Ray ray;
-    private RaycastHit hitInfo;
-    
-    
+    private int _currentGunPoint = 0;
+    private float _remainingShootCooldown = 0f;
+
+    private int _currentHealth;
+
+    private Camera _cam;
+
+    private void Start()
+    {
+        _currentHealth = maxHealth;
+        _cam = Camera.main;
+    }
+
+    private void OnEnable()
+    {
+        for (var i = 0; i < hitBoxes.Length; i++)
+        {
+            hitBoxes[i].TriggerEnter2D += CheckTrigger;
+            hitBoxes[i].CollisionEnter2D += CheckCollision;
+        }
+    }
+
+    private void OnDisable()
+    {
+        for (var i = 0; i < hitBoxes.Length; i++)
+        {
+            hitBoxes[i].TriggerEnter2D -= CheckTrigger;
+            hitBoxes[i].CollisionEnter2D -= CheckCollision;
+        }
+    }
+
     private void Update()
     {
         HandleVelocity();
-        HandleRotation();
+        HandleMouseRotation();
         HandleCooldowns();
-        if (_remainingCooldown <= 0f && Input.GetMouseButtonDown(0))
-        {
-            HandleShooting();
-        }
+        HandleShooting();
     }
 
     private void HandleVelocity()
@@ -40,41 +66,79 @@ public class PlayerController : MonoBehaviour
 
         rb.velocity = Vector2.Lerp(rb.velocity, _targetVelocity, Time.deltaTime);
     }
-
-    private void HandleRotation()
+    private void HandleMouseRotation()
     {
-        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        var currentAngleDeg = transform.localEulerAngles.z;
+        var worldPosition = GetMousePosAsWorld();
+        var targetRotation = worldPosition - transform.position;
+        targetRotation.Normalize();
+        var targetAngleDeg = Mathf.Rad2Deg * Mathf.Atan2(targetRotation.y, targetRotation.x);
 
-        if (Physics.Raycast(ray, out hitInfo))
-        {
-            _targetRotation = transform.position - hitInfo.point;
-            _targetRotation.Normalize();
-
-            transform.localEulerAngles = new Vector3(0f, 0f, 
-                Mathf.Atan2(_targetRotation.y, _targetRotation.x));
-        }
+        // rb.rotation = Mathf.LerpAngle(currentAngleDeg, targetAngleDeg, Time.deltaTime * rotationSpeed);
+        transform.localEulerAngles = new Vector3(0f, 0f, 
+            Mathf.LerpAngle(currentAngleDeg, targetAngleDeg, Time.deltaTime * rotationSpeed));
     }
-
     private void HandleCooldowns()
     {
-        if (_remainingCooldown > 0f) _remainingCooldown -= Time.deltaTime;
+        if (_remainingShootCooldown > 0f) _remainingShootCooldown -= Time.deltaTime;
     }
-    
     private void HandleShooting()
     {
-        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (_remainingShootCooldown > 0f || !Input.GetMouseButton(0)) { return; }
+        
+        var shootVec = transform.right;
+        shootVec.Normalize();
 
-        if (Physics.Raycast(ray, out hitInfo))
+        var proj = Instantiate(projectilePrefab, gunPoints[_currentGunPoint].position, 
+            Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Atan2(shootVec.y, shootVec.x)));
+        proj.SetMoveVector(shootVec);
+
+        IterateGunPoint();
+        _remainingShootCooldown = shootCooldown;
+    }
+
+    private void IterateGunPoint()
+    {
+        _currentGunPoint++;
+        if (_currentGunPoint >= gunPoints.Length)
         {
-            var shootVec =  transform.position - hitInfo.point;
-            shootVec.Normalize();
-
-            var proj = Instantiate(projectilePrefab, gunPoints[Random.Range(0, gunPoints.Length - 1)].position, 
-                Quaternion.Euler(0, 0, Mathf.Atan2(shootVec.y, shootVec.x)), transform);
-            
-            proj.SetMoveVector(shootVec);
+            _currentGunPoint -= gunPoints.Length;
         }
+    }
+    private Vector3 GetMousePosAsWorld()
+    {
+        var mousePos = Input.mousePosition;
+        mousePos.z = _cam.nearClipPlane;
+        
+        return _cam.ScreenToWorldPoint(mousePos);
+    }
 
-        _remainingCooldown = shootCooldown;
+    public void CheckTrigger(Collider2D other)
+    {
+        if (!other.gameObject.TryGetComponent(out Projectile proj)) { return; }
+
+        if (proj.DmgType != Projectile.DamagingType.Player) { return; }
+        
+        TakeDamage(proj.Damage);
+        Destroy(proj.gameObject);
+    }
+    public void CheckCollision(Collision2D other)
+    {
+        if (!other.gameObject.TryGetComponent(out Projectile proj)) { return; }
+
+        if (proj.DmgType != Projectile.DamagingType.Player) { return; }
+        
+        TakeDamage(proj.Damage);
+        Destroy(proj.gameObject);
+    }
+    public void TakeDamage(int amount)
+    {
+        _currentHealth -= amount;
+        
+        if (_currentHealth < 0) { GetDestroyed(); }
+    }
+    public void GetDestroyed()
+    {
+        Destroy(gameObject);
     }
 }

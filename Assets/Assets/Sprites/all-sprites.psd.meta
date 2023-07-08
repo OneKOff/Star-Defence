@@ -132,10 +132,10 @@ TextureImporter:
       name: enemy_basic
       rect:
         serializedVersion: 2
-        x: 17
-        y: 218
-        width: 19
-        height: 15
+        x: 3
+        y: 215
+        width: 15
+        height: 19
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,10 +153,10 @@ TextureImporter:
       name: enemy_charger
       rect:
         serializedVersion: 2
-        x: 39
-        y: 214
-        width: 15
-        height: 21
+        x: 23
+        y: 218
+        width: 21
+        height: 15
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -174,10 +174,10 @@ TextureImporter:
       name: enemy_giant
       rect:
         serializedVersion: 2
-        x: 58
-        y: 205
-        width: 42
-        height: 35
+        x: 55
+        y: 210
+        width: 36
+        height: 42
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -195,10 +195,10 @@ TextureImporter:
       name: enemy_artillery
       rect:
         serializedVersion: 2
-        x: 108
-        y: 213
-        width: 11
-        height: 24
+        x: 98
+        y: 236
+        width: 24
+        height: 11
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -216,10 +216,10 @@ TextureImporter:
       name: enemy_shieldbearer
       rect:
         serializedVersion: 2
-        x: 124
-        y: 217
-        width: 15
-        height: 17
+        x: 148
+        y: 220
+        width: 17
+        height: 15
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -237,10 +237,10 @@ TextureImporter:
       name: enemy_sabotager
       rect:
         serializedVersion: 2
-        x: 165
+        x: 173
         y: 216
-        width: 36
-        height: 19
+        width: 19
+        height: 36
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -258,10 +258,10 @@ TextureImporter:
       name: enemy_symbiote
       rect:
         serializedVersion: 2
-        x: 217
-        y: 221
-        width: 9
-        height: 12
+        x: 205
+        y: 229
+        width: 11
+        height: 9
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -279,8 +279,8 @@ TextureImporter:
       name: enemy_artillery_projectile
       rect:
         serializedVersion: 2
-        x: 111
-        y: 206
+        x: 107
+        y: 224
         width: 5
         height: 5
       alignment: 0
@@ -300,10 +300,10 @@ TextureImporter:
       name: enemy_sabotager_particle_1
       rect:
         serializedVersion: 2
-        x: 176
-        y: 204
-        width: 4
-        height: 8
+        x: 178
+        y: 209
+        width: 8
+        height: 4
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -321,10 +321,10 @@ TextureImporter:
       name: enemy_sabotager_particle_2
       rect:
         serializedVersion: 2
-        x: 183
-        y: 204
-        width: 4
-        height: 8
+        x: 178
+        y: 202
+        width: 8
+        height: 4
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -363,10 +363,10 @@ TextureImporter:
       name: player_ship_projectile
       rect:
         serializedVersion: 2
-        x: 2
-        y: 171
-        width: 3
-        height: 5
+        x: 1
+        y: 172
+        width: 5
+        height: 3
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -573,10 +573,10 @@ TextureImporter:
       name: enemy_shieldbearer_closed
       rect:
         serializedVersion: 2
-        x: 124
-        y: 237
-        width: 15
-        height: 10
+        x: 151
+        y: 238
+        width: 10
+        height: 15
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -594,10 +594,10 @@ TextureImporter:
       name: enemy_shieldbearer_pulse
       rect:
         serializedVersion: 2
-        x: 124
-        y: 210
-        width: 15
-        height: 6
+        x: 155
+        y: 201
+        width: 6
+        height: 15
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -725,7 +725,7 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -746,7 +746,7 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -767,7 +767,7 @@ TextureImporter:
         width: 21
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -788,7 +788,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -809,7 +809,7 @@ TextureImporter:
         width: 16
         height: 15
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -830,7 +830,7 @@ TextureImporter:
         width: 31
         height: 13
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -838,6 +838,27 @@ TextureImporter:
       bones: []
       spriteID: 3e32f1c57bca8974fa9a538e8afed6ed
       internalID: 1877098235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_projectile_fire_spike
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 196
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38dc6f36b8597f24eb4e88ba7d2681dc
+      internalID: 726554829
       vertices: []
       indices: 
       edges: []
@@ -856,15 +877,15 @@ TextureImporter:
       building_top_minigun: -1802535872
       background_space_tile_1: -396843819
       building_projectile_pulser: -134564671
-      asteroid_withresources_1: 394816706
+      building_top_minestation: 226324935
       building_top_shielder: -109046134
-      building_drone_minestation: 5674754
       building_projectile_shielder: -1707007685
       enemy_sabotager_particle_2: -836080622
       player_ship_projectile: 1033109462
       enemy_artillery_projectile: 1626889115
       building_top_pulser: -1235612734
       enemy_shieldbearer_pulse: -477948604
+      enemy_projectile_fire_spike: 726554829
       enemy_basic: 1105849386
       background_space_tile_2: 1202002355
       background_space_tile_3: 1049376461
@@ -878,13 +899,14 @@ TextureImporter:
       building_projectile_minigun: 851661675
       asteroid_2: 1877098235
       enemy_giant: -1597267730
+      asteroid_withresources_1: 394816706
       enemy_artillery: -1525061373
       star_base: -1620634923
       player_ship: 1879070146
       enemy_charger: -668584347
-      building_top_minestation: 226324935
       enemy_sabotager: 118291135
       enemy_shieldbearer_closed: 2100944796
+      building_drone_minestation: 5674754
       building_drone_repairstation: 2021164020
       star_mine: -207213928
   spritePackingTag: 
