@@ -18,6 +18,9 @@ public class PlayerController : MonoBehaviour, IDamageable
     [Header("Health")] 
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private Collider2DInvoker[] hitBoxes;
+    
+    public int MaxHealth { get { return maxHealth; } set {} }
+    public int CurrentHealth { get { return _currentHealth; } set {} }
 
     private Vector2 _targetVelocity;
 
@@ -116,7 +119,6 @@ public class PlayerController : MonoBehaviour, IDamageable
     public void CheckTrigger(Collider2D other)
     {
         if (!other.gameObject.TryGetComponent(out Projectile proj)) { return; }
-
         if (proj.DmgType != Projectile.DamagingType.Player) { return; }
         
         TakeDamage(proj.Damage);
@@ -125,7 +127,6 @@ public class PlayerController : MonoBehaviour, IDamageable
     public void CheckCollision(Collision2D other)
     {
         if (!other.gameObject.TryGetComponent(out Projectile proj)) { return; }
-
         if (proj.DmgType != Projectile.DamagingType.Player) { return; }
         
         TakeDamage(proj.Damage);

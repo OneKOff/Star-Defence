@@ -13,6 +13,9 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private Collider2DInvoker[] hitBoxes;
 
+    public int MaxHealth { get { return maxHealth; } set {} }
+    public int CurrentHealth { get { return _currentHealth; } set {} }
+    
     private int _currentHealth;
     private Transform _currentTarget;
 
@@ -46,12 +49,21 @@ public class Enemy : MonoBehaviour, IDamageable
         var movementVector = (_currentTarget.position - transform.position).normalized;
         if (useAcceleration)
         {
-            var xAccel = Math.Abs(Mathf.Sign(velocity.x) - Mathf.Sign(movementVector.x)) < Mathf.Epsilon
-                ? acceleration * movementVector.x
-                : deceleration * movementVector.x;
-            var yAccel = Math.Abs(Mathf.Sign(velocity.y) - Mathf.Sign(movementVector.y)) < Mathf.Epsilon
-                ? acceleration * movementVector.y
-                : deceleration * movementVector.y;
+            var mlt = deceleration;
+            if (Math.Abs(Mathf.Sign(velocity.x) - Mathf.Sign(movementVector.x)) < Mathf.Epsilon &&
+                Math.Abs(Mathf.Sign(velocity.y) - Mathf.Sign(movementVector.y)) < Mathf.Epsilon)
+            {
+                mlt = acceleration;
+            }
+            
+            // var xAccel = Math.Abs(Mathf.Sign(velocity.x) - Mathf.Sign(movementVector.x)) < Mathf.Epsilon
+            //     ? acceleration * movementVector.x
+            //     : deceleration * movementVector.x;
+            // var yAccel = Math.Abs(Mathf.Sign(velocity.y) - Mathf.Sign(movementVector.y)) < Mathf.Epsilon
+            //     ? acceleration * movementVector.y
+            //     : deceleration * movementVector.y;
+            var xAccel = mlt * movementVector.x;
+            var yAccel = mlt * movementVector.y;
 
             var accelerationVector = new Vector2(xAccel, yAccel);
             velocity += accelerationVector * Time.deltaTime;
@@ -64,7 +76,7 @@ public class Enemy : MonoBehaviour, IDamageable
         velocity = ClampVelocityManually(velocity);
         rb.velocity = velocity;
 
-        Debug.Log("Velocity magnitude: " + rb.velocity.magnitude);
+        // Debug.Log("Velocity magnitude: " + rb.velocity.magnitude);
         transform.localEulerAngles = new Vector3(0, 0, 
             Mathf.Rad2Deg * Mathf.Atan2(movementVector.y, movementVector.x));
     }
@@ -82,8 +94,9 @@ public class Enemy : MonoBehaviour, IDamageable
     public void CheckTrigger(Collider2D other)
     {
         if (!other.gameObject.TryGetComponent(out Projectile proj)) { return; }
-
         if (proj.DmgType != Projectile.DamagingType.Enemy) { return; }
+        
+        Debug.Log($"<color=red>Enemy triggered by {other.gameObject.name}");
         
         TakeDamage(proj.Damage);
         Destroy(proj.gameObject);
@@ -91,8 +104,9 @@ public class Enemy : MonoBehaviour, IDamageable
     public void CheckCollision(Collision2D other)
     {
         if (!other.gameObject.TryGetComponent(out Projectile proj)) { return; }
-
         if (proj.DmgType != Projectile.DamagingType.Enemy) { return; }
+        
+        Debug.Log($"<color=red>Enemy collided with {other.gameObject.name}");
         
         TakeDamage(proj.Damage);
         Destroy(proj.gameObject);
