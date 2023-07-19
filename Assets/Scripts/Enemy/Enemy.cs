@@ -73,15 +73,14 @@ public class Enemy : MonoBehaviour, IDamageable
             velocity = movementVector * acceleration;
         }
 
-        velocity = ClampVelocityManually(velocity);
+        velocity = ClampVelocity(velocity);
         rb.velocity = velocity;
-
-        // Debug.Log("Velocity magnitude: " + rb.velocity.magnitude);
+        
         transform.localEulerAngles = new Vector3(0, 0, 
             Mathf.Rad2Deg * Mathf.Atan2(movementVector.y, movementVector.x));
     }
 
-    private Vector2 ClampVelocityManually(Vector2 vector)
+    private Vector2 ClampVelocity(Vector2 vector)
     {
         if (vector.magnitude > maxSpeed)
         {
