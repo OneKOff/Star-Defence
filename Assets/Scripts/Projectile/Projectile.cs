@@ -41,7 +41,7 @@ public class Projectile : MonoBehaviour
 
     private void OnDestroy()
     {
-        Instantiate(impactParticlesPrefab, transform.position, transform.rotation);
+        if (impactParticlesPrefab) Instantiate(impactParticlesPrefab, transform.position, transform.rotation);
     }
 
     public void SetMoveVector(Vector2 moveVec)
